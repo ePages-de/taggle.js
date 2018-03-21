@@ -12,7 +12,9 @@
       <li v-for="product of products" v-bind:key="product._id">
         <p><strong>{{product.name}}</strong></p>
         <p>{{product.sku}}</p>
-        <p><img :src="product.defaultImageUri"/></p>
+        <p v-if="product.defaultImageUri">
+          <img :src="product.defaultImageUri" :alt="product.name"/>
+        </p>
       </li>
     </ul>
   </div>
@@ -53,9 +55,13 @@ export default {
     .then(response => {
       this.products = response.data._embedded.products
       this.products.forEach((element, index, array) => {
-        var uriTemplate = uriTemplates(element._links['default-image-data'].href)
-        var uri = uriTemplate.fill({width: 300, height: 150})
-        array[index].defaultImageUri = uri
+        var imageData = element._links['default-image-data']
+        if (imageData) {
+          var uri = uriTemplates(imageData.href).fill({width: 300, height: 150})
+          array[index].defaultImageUri = uriTemplates(imageData.href).fill({width: 300, height: 150})
+        } else {
+          array[index].defaultImageUri = 'https://dummyimage.com/300x150/dedede/0011ff.png&text=no+image'
+        }
       })
     })
     .catch(e => {
