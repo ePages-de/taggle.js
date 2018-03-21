@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-    <img src="./assets/epages.png">
+    <img src="./assets/vue.png" width="150">
     <router-view/>
   </div>
 </template>

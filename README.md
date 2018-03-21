@@ -52,3 +52,15 @@ $ npm install axios --save
 + axios@0.18.0
 added 3 packages in 7.883s
 ```
+
+
+## Tag Cloud
+
+```json
+{
+    "tags" : [ 
+        { "kitchen" : 22 },
+        { "furniture" : 10 }
+    ]
+}
+```

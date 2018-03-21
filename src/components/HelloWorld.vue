@@ -1,7 +1,13 @@
 <template>
   <div class="hello">
-    <h1>Products</h1>
+    <h1>Tags</h1>
+    <ul v-if="tags && tags.length">
+      <li v-for="tag of tags" v-bind:key="tag.name">
+        <p><strong>{{tag.name}}</strong> ({{tag.count}})</p>
+      </li>
+    </ul>
 
+    <h1>Products</h1>
     <ul v-if="products && products.length">
       <li v-for="product of products" v-bind:key="product._id">
         <p><strong>{{product.name}}</strong></p>
@@ -13,23 +19,33 @@
 
 <script>
 /* eslint-disable */
-
 import axios from 'axios'
-
 export default {
   name: 'HelloWorld',
   data () {
     return {
       products: [],
-      errors: [],
-      msg: 'Welcome to Your Vue.js App'
+      tags: [],
+      errors: []
     }
   },
-
   created () {
-    axios.get('https://taggle.beyondshop.cloud/api/product-view/products/search/find-by-tags?tag=kitchen')
+    axios.get('https://taggle.beyondshop.cloud/api/product-view/products/search/find-available-tags')
     .then(response => {
-      console.log(response.data._embedded.products)
+      this.tags = response.data.tags.map(x => {
+        var tag = {}
+        Object.keys(x).forEach(key => {
+          tag.name = key
+          tag.count = x[key]
+        })
+        return tag
+      })
+    })
+    .catch(e => {
+      this.errors.push(e)
+    })
+    axios.get('https://taggle.beyondshop.cloud/api/product-view/products/search/find-by-tags?tags=kitchen')
+    .then(response => {
       this.products = response.data._embedded.products
     })
     .catch(e => {
