@@ -12,6 +12,7 @@
       <li v-for="product of products" v-bind:key="product._id">
         <p><strong>{{product.name}}</strong></p>
         <p>{{product.sku}}</p>
+        <p><img :src="product.defaultImageUri"/></p>
       </li>
     </ul>
   </div>
@@ -20,6 +21,7 @@
 <script>
 /* eslint-disable */
 import axios from 'axios'
+import uriTemplates from 'uri-templates'
 export default {
   name: 'HelloWorld',
   data () {
@@ -30,6 +32,7 @@ export default {
     }
   },
   created () {
+    // retrieve tags
     axios.get('https://taggle.beyondshop.cloud/api/product-view/products/search/find-available-tags')
     .then(response => {
       this.tags = response.data.tags.map(x => {
@@ -44,9 +47,16 @@ export default {
     .catch(e => {
       this.errors.push(e)
     })
-    axios.get('https://taggle.beyondshop.cloud/api/product-view/products/search/find-by-tags?tags=kitchen')
+
+    // retrieve products
+    axios.get('https://taggle.beyondshop.cloud/api/product-view/products/search/find-by-tags?tags=accessories&size=100')
     .then(response => {
       this.products = response.data._embedded.products
+      this.products.forEach((element, index, array) => {
+        var uriTemplate = uriTemplates(element._links['default-image-data'].href)
+        var uri = uriTemplate.fill({width: 300, height: 150})
+        array[index].defaultImageUri = uri
+      })
     })
     .catch(e => {
       this.errors.push(e)
