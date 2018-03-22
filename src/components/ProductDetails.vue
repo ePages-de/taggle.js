@@ -10,7 +10,7 @@
           <h1>{{product.name}}</h1>
           <div id="sku">Product Number: {{product.sku}}</div>
           <div id="price">
-            <span class="currency">&pound;</span>
+            <span class="currency" v-html="formatCurrency(product.salesPrice.currency)"></span>
             <span class="amount">{{product.salesPrice.amount | formatNumber}}</span>
           </div>
           <div id="description">{{product.description}}</div>
@@ -37,7 +37,7 @@ export default {
 
   data: function() {
     return {
-      product: { "salesPrice" : { "amount" : 0, "currency" : "GBP" }},
+      product: { "salesPrice" : { "amount" : 0, "currency" : "GBP" } },
       errors: []
     }
   },
@@ -75,6 +75,17 @@ export default {
       .catch(e => {
         this.errors.push(e)
       })
+    },
+
+    formatCurrency: function (value) {
+      switch(value) {
+        case "GBP":
+          return "&pound"
+        case "EUR":
+          return "&euro;"
+        default:
+           return "???"
+      }
     }
   },
   
