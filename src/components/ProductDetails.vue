@@ -4,16 +4,18 @@
       <link href="https://fonts.googleapis.com/css?family=Maven+Pro" rel="stylesheet" />
       <div id="content">
         <div id="imagecontainer">
-          <img src="https://taggle.beyondshop.cloud/api/core-storage/images/ektorp-two-seat-sofa-nordvalla-dark-grey__0386583_pe559163_s4.jpg?hash=a43fafa267094419bd8f8da2ae582aefc7b01f1a&amp;width=500&amp;height=500" />
+          <img :src="product.defaultImageUri">
         </div>
         <div id="details">
-          <h1>EKTORP Nordvalla dark grey</h1>
-          <div id="sku">Product Number: 1007</div>
-          <div id="price">&pound;295.00</div>
-          <div id="description">Get cosy with someone on a two-seater sofa, or take up some space and snuggle in all by yourself. Two-seater sofas are a great way to add comfy seating to a smaller space, or to compliment a larger sofa in the room. Browse our wide selection of styles and colours to find one that's right for you. Still can't find what you're looking for? Check our complete range of sofas.</div>
+          <h1>{{product.name}}</h1>
+          <div id="sku">Product Number: {{product.sku}}</div>
+          <div id="price">{{product.salesPrice.currency}} {{product.salesPrice.amount}}</div>
+          <div id="description">{{product.description}}</div>
           <div id="tags">
             <ul>
-              <li><a href="#">affordable</a></li><li><a href="#">dark grey</a></li><li><a href="#">removable cover</a></li><li><a href="#">sitting</a></li><li><a href="#">snuggle</a></li><li><a href="#">soft</a></li><li><a href="#">two-seater</a></li>
+              <li v-for="tag in product.linkedTags" :key="tag.name">
+                <a :href="tag.href">{{tag.name}}</a>
+              </li>
             </ul>
           </div>
         </div>
@@ -31,7 +33,7 @@ export default {
 
   data: function() {
     return {
-      product: {},
+      product: { },
       errors: []
     }
   },
@@ -44,15 +46,29 @@ export default {
   methods: {
     fetchProductById: async function(shop, id) {
       var api = 'https://' + shop + '.beyondshop.cloud/api/product-view/products/' + id
-      console.log(api)
       axios.get(api)
       .then(response => {
-        console.log(response.data)
         this.product = response.data
+        var imageDataLink = this.product._links['default-image-data']
+        this.product.defaultImageUri = imageDataLink
+          ? uriTemplates(imageDataLink.href).fill({width: 800, height: 400})
+          : 'https://dummyimage.com/800x400/dedede/0011ff.png&text=no+image'
+        this.product.linkedTags = []
+        this.product.tags.forEach(tag => {
+          var linkedTag = {}
+          linkedTag.name = tag
+          linkedTag.count = -1
+          linkedTag.href = '#/' + shop + '/products/' + tag
+          this.product.linkedTags.push(linkedTag)
+        })
       })
       .catch(e => {
         this.errors.push(e)
       })
+    },
+
+    tagUri: function(shop, tag) {
+      return '#'
     }
   },
   
