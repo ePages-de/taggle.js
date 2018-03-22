@@ -77,7 +77,8 @@ li {
 }
 li.product {
   list-style-position: inside;
-  border: 1px solid black;
+  background-color: #fff;
+  box-shadow: 2px 0px 10px #ccc;
   padding: 5px;
   width: 300px;
 }
