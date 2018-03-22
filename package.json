@@ -20,7 +20,9 @@
     "uri-templates": "^0.2.0",
     "vue": "^2.5.2",
     "vue-router": "^3.0.1",
-    "vue-tag-cloud": "0.0.1"
+    "vue-tag-cloud": "0.0.1",
+    "vue-wordcloud": "^1.0.2",
+    "vuewordcloud": "^18.3.21"
   },
   "devDependencies": {
     "autoprefixer": "^7.1.2",

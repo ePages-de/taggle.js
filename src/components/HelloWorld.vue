@@ -1,32 +1,60 @@
 <template>
   <div class="hello">
-    <VueTagCloud v-bind:data="tagData"></VueTagCloud>
+    <h1>HELLO</h1>
+     <wordcloud
+      :data="defaultWords"
+      nameKey="name"
+      valueKey="count">
+      </wordcloud>
+      <ul v-if="errors && errors.length">
+    <li v-for="error of errors" v-bind:key="error.message">
+      {{error.message}}
+    </li>
+  </ul>
     </div>
 </template>
 
 <script>
 /* eslint-disable */
-import VueTagCloud from 'vue-tag-cloud'
+import axios from 'axios'
+import wordcloud from 'vue-wordcloud'
 
 export default {
   name: 'HelloWorld',
   components: {
-    VueTagCloud
-  },
+    wordcloud
+   },
 
   data: function() {
     return {
-      tagData: [
-        { text: 'Lorem', weight: 15, link: 'https://google.com' },
-        { text: 'Ipsum', weight: 9 },
-        { text: 'Dolor', weight: 6 },
-        { text: 'Sit', weight: 7 },
-        { text: 'Amet', weight: 5 }
-      ]
-    }
+      defaultWords: [],
+      errors: []
+      }
+  },
+
+  created: function() {
+     axios.get('https://taggle.beyondshop.cloud/api/product-view/products/search/find-available-tags')
+    .then(response => {
+      this.defaultWords = response.data.tags.map(x => {
+        var tag = {}
+        Object.keys(x).forEach(key => {
+        tag.name = key
+        tag.count = x[key]
+          //tag.link = '#/tags?tag=' + key
+        })
+        return tag
+      })
+    })
+    .catch(e => {
+      this.errors.push(e)
+    })
   }
+  
 }
+
 </script>
+
+
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
