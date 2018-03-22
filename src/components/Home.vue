@@ -1,13 +1,13 @@
 <template>
   <div class="hello">
-     I want to check out taggle for my shop with the domain<br>
+     Welcome to Taggle! Using it is simple. Just enter your shop name:<br>
      <span>https://</span><input autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"
         v-model="shopname"
         value="shopname"
         v-on:keyup.enter="goToUrl"
         autofocus
         ><span>.beyondshop.cloud</span>
-     <p>To see the magik press #Enter</p>
+     <p>Nearly done! There's only one last step until you can dive into your own tag cloud: Press #Enter.</p>
     </div>
 </template>
 
@@ -17,13 +17,13 @@
 export default {
   name: 'Home',
   data: function() {
-    
+
     return {
       shopname: 'taggle'
     }
   },
-  
-  methods: { 
+
+  methods: {
     goToUrl: function() {
       this.$router.push({ path: '/' + this.shopname })
     }
