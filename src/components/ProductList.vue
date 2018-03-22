@@ -1,7 +1,7 @@
 <template>
   <div class="products">
     <div v-if="products && products.length">
-      <h2>Products ({{products.length}})</h2>
+      <h2>{{products.length}} products for tag <q class="tag">{{tag}}</q></h2>
       <ul>
         <li class="product" v-for="product of products" v-bind:key="product._id">
           <p><strong>{{product.name}}</strong></p>
@@ -20,7 +20,7 @@ import axios from 'axios'
 import uriTemplates from 'uri-templates'
 
 export default {
-  name: 'HelloWorld',
+  name: 'ProductList',
 
   data: function() {
     return {
@@ -34,9 +34,8 @@ export default {
   },
 
   methods: {
-    fetchProducts: async function() {
-      var api = 'https://taggle.beyondshop.cloud/api/product-view/products/search/find-by-tags?size=100&tag=' + this.tag
-      console.log(api)
+    fetchProductsByTag: async function(tag) {
+      var api = 'https://taggle.beyondshop.cloud/api/product-view/products/search/find-by-tags?size=100&tag=' + tag
       axios.get(api)
       .then(response => {
         this.products = response.data._embedded.products
@@ -56,7 +55,7 @@ export default {
     }
   },
   
-  created: function() { this.fetchProducts() }
+  created: function() { this.fetchProductsByTag(this.tag) }
 }
 </script>
 
@@ -81,5 +80,8 @@ li.product {
 }
 a {
   color: #42b983;
+}
+q.tag {
+  quotes: "«" "»" "‹" "›";
 }
 </style>
