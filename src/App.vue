@@ -1,6 +1,7 @@
 <template>
   <div id="app">
     <div id="topbar"><a :href="tagsUri"><img src="./assets/vue.png"></a></div>
+    <a :href="goHome" id="home_link">run forest run</a>
     <router-view/>
   </div>
 </template>
@@ -9,7 +10,8 @@
 export default {
   name: 'App',
   computed: {
-    tagsUri: function () { return this.$route.params.shop ? '/#/' + this.$route.params.shop : '/#/taggle' }
+    tagsUri: function () { return this.$route.params.shop ? '/#/' + this.$route.params.shop : '/#/taggle' },
+    goHome: function() { return '/' }
   }
 }
 </script>
@@ -37,6 +39,12 @@ body {
 }
 #topbar img {
   width:50px;
+}
+#home_link {
+  width: 100%;
+  left:0px;
+  bottom: 10px;
+  position: absolute;
 }
 @media (max-width:767px)
 {

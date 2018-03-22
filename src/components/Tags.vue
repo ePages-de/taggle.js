@@ -3,8 +3,8 @@
     <div v-if="tags && tags.length">
       <wordcloud
         :data='defaultWords'
-        :rotate="{from: -0, to: 0, numOfOrientation: 0 }"
-        :fontSize="[30, 100]"
+        :rotate="{from: -0, to: 90, numOfOrientation: 2 }"
+        :fontSize="[10, 100]"
         nameKey='name'
         valueKey='count'
         :wordClick=goToProduct
