@@ -1,10 +1,14 @@
 <template>
   <div class="hello">
-    <h1>HELLO</h1>
      <wordcloud
-      :data="defaultWords"
-      nameKey="name"
-      valueKey="count">
+      :data='defaultWords'
+      :wordPadding='40'
+      :rotate="{from: -0, to: 0, numOfOrientation: 0 }"
+      :fontSize="[30, 100]"
+      spiral='archimedean'
+      nameKey='name'
+      valueKey='count'
+      :wordClick=MyConsole>
       </wordcloud>
       <ul v-if="errors && errors.length">
     <li v-for="error of errors" v-bind:key="error.message">
@@ -31,7 +35,9 @@ export default {
       errors: []
       }
   },
-
+  methods: {
+    MyConsole: function() {console.log('Test')}
+  },
   created: function() {
      axios.get('https://taggle.beyondshop.cloud/api/product-view/products/search/find-available-tags')
     .then(response => {
@@ -40,7 +46,6 @@ export default {
         Object.keys(x).forEach(key => {
         tag.name = key
         tag.count = x[key]
-          //tag.link = '#/tags?tag=' + key
         })
         return tag
       })
