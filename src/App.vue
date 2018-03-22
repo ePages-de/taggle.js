@@ -1,7 +1,7 @@
 <template>
   <div id="app">
     <div id="topbar"><a :href="tagsUri"><img src="./assets/vue.png"></a></div>
-    <a :href="goHome" id="home_link">run forest run</a>
+    <a :href="goHome" id="home_link">Home</a>
     <router-view/>
   </div>
 </template>
