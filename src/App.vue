@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-    <div id="topbar"><a :href="tagsUri"><img src="./assets/vue.png" width="150"></a></div>
+    <div id="topbar"><a :href="tagsUri"><img src="./assets/vue.png"></a></div>
     <router-view/>
   </div>
 </template>
@@ -31,5 +31,15 @@ body {
 #topbar {
   background-color: #fff;
   box-shadow: 0 0 5px #666;
+  margin: 0 -30px 30px;
+  text-align: left;
+  padding: 0 30px;
+}
+#topbar img {
+  width:50px;
+}
+@media (max-width:767px)
+{
+  body {padding: 0 2%;}
 }
 </style>
