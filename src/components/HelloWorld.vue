@@ -1,21 +1,11 @@
 <template>
   <div class="hello">
     <VueTagCloud v-bind:data="tagData"></VueTagCloud>
-    <div v-if="tags && tags.length">
-      <h2>Tags ({{tags.length}})</h2>
-      <ul>
-        <li class="tag" v-for="tag of tags" v-bind:key="tag.name">
-          <p><strong><a :href="tag.href">{{tag.name}}</a></strong> ({{tag.count}})</p>
-        </li>
-      </ul>
     </div>
-  </div>
 </template>
 
 <script>
 /* eslint-disable */
-import axios from 'axios'
-import uriTemplates from 'uri-templates'
 import VueTagCloud from 'vue-tag-cloud'
 
 export default {
@@ -24,38 +14,16 @@ export default {
     VueTagCloud
   },
 
-  data () {
+  data: function() {
     return {
       tagData: [
-        // { text: 'Lorem', weight: 15 },
         { text: 'Lorem', weight: 15, link: 'https://google.com' },
         { text: 'Ipsum', weight: 9 },
         { text: 'Dolor', weight: 6 },
         { text: 'Sit', weight: 7 },
         { text: 'Amet', weight: 5 }
-      ],
-      tags: [],
-      errors: []
+      ]
     }
-  },
-  
-  created () {
-    // retrieve tags
-    axios.get('https://taggle.beyondshop.cloud/api/product-view/products/search/find-available-tags')
-    .then(response => {
-      this.tags = response.data.tags.map(x => {
-        var tag = {}
-        Object.keys(x).forEach(key => {
-          tag.name = key
-          tag.count = x[key]
-          tag.href = '#/products/' + key
-        })
-        return tag
-      })
-    })
-    .catch(e => {
-      this.errors.push(e)
-    })
   }
 }
 </script>

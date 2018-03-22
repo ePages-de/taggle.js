@@ -30,12 +30,13 @@ export default {
   },
 
   computed: {
-    tag: function() { return this.$route.params.tag }
+    shop: function() { return this.$route.params.shop },
+    tag: function() { return this.$route.params.tag }    
   },
 
   methods: {
-    fetchProductsByTag: async function(tag) {
-      var api = 'https://taggle.beyondshop.cloud/api/product-view/products/search/find-by-tags?size=100&tag=' + tag
+    fetchProductsByTag: async function(shop, tag) {
+      var api = 'https://' + shop + '.beyondshop.cloud/api/product-view/products/search/find-by-tags?size=100&tag=' + tag
       axios.get(api)
       .then(response => {
         this.products = response.data._embedded.products
@@ -55,7 +56,7 @@ export default {
     }
   },
   
-  created: function() { this.fetchProductsByTag(this.tag) }
+  created: function() { this.fetchProductsByTag(this.shop, this.tag) }
 }
 </script>
 
