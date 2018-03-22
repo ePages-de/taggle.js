@@ -89,6 +89,7 @@ body {
     display: flex;
     max-width: 1000px;
     box-shadow: 2px 0px 10px #ccc;
+    text-align:left;
 }
 #imagecontainer {flex-basis: 100%; padding: 0; margin: 0 20px 0 0;}
 #imagecontainer img {width: 100%;}
