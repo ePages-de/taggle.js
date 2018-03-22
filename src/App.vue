@@ -11,7 +11,7 @@ export default {
   name: 'App',
   computed: {
     tagsUri: function () { return this.$route.params.shop ? '/#/' + this.$route.params.shop : '/#/taggle' },
-    goHome: function() { return '/' }
+    goHome: function () { return '/' }
   }
 }
 </script>
