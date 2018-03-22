@@ -1,12 +1,14 @@
 <template>
   <div class="hello">
     <div v-if="tags && tags.length">
-      <h2>Tags ({{tags.length}})</h2>
-      <ul>
-        <li class="tag" v-for="tag of tags" v-bind:key="tag.name">
-          <p><strong><a :href="tag.href">{{tag.name}}</a></strong> ({{tag.count}})</p>
-        </li>
-      </ul>
+      <wordcloud
+        :data='defaultWords'
+        :rotate="{from: -0, to: 0, numOfOrientation: 0 }"
+        :fontSize="[30, 100]"
+        nameKey='name'
+        valueKey='count'
+        :wordClick=goToProduct
+        ></wordcloud>
     </div>
   </div>
 </template>
@@ -14,14 +16,20 @@
 <script>
 /* eslint-disable */
 import axios from 'axios'
+import wordcloud from 'vue-wordcloud'
 
 export default {
   name: 'Tags',
 
+  components: {
+    wordcloud
+   },
+
   data: function() {
     return {
       tags: [],
-      errors: []
+      errors: [],
+      defaultWords: []
     }
   },
   
@@ -43,10 +51,15 @@ export default {
           })
           return tag
         })
-      })
+        this.defaultWords = this.tags
+      })  
       .catch(e => {
         this.errors.push(e)
       })
+    },
+
+    goToProduct: function(text, wc) {
+      this.$router.push({ path: '/' + this.shop + '/products/' + text })
     }
   },
 
