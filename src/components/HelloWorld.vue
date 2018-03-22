@@ -1,22 +1,25 @@
 <template>
   <div class="hello">
-    <h1>Tags</h1>
-    <ul v-if="tags && tags.length">
-      <li v-for="tag of tags" v-bind:key="tag.name">
-        <p><strong>{{tag.name}}</strong> ({{tag.count}})</p>
-      </li>
-    </ul>
+    <div v-if="tags && tags.length">
+      <h2>Tags ({{tags.length}})</h2>
+      <ul>
+        <li class="tag" v-for="tag of tags" v-bind:key="tag.name">
+          <p><strong>{{tag.name}}</strong> ({{tag.count}})</p>
+        </li>
+      </ul>
+    </div>
 
-    <h1>Products</h1>
-    <ul v-if="products && products.length">
-      <li v-for="product of products" v-bind:key="product._id">
-        <p><strong>{{product.name}}</strong></p>
-        <p>{{product.sku}}</p>
-        <p v-if="product.defaultImageUri">
-          <img :src="product.defaultImageUri" :alt="product.name"/>
-        </p>
-      </li>
-    </ul>
+    <div v-if="products && products.length">
+      <h2>Products ({{products.length}})</h2>
+      <ul>
+        <li class="product" v-for="product of products" v-bind:key="product._id">
+          <p><strong>{{product.name}}</strong></p>
+          <p v-if="product.defaultImageUri">
+            <img :src="product.defaultImageUri" :alt="product.name"/>
+          </p>
+        </li>
+      </ul>
+    </div>
   </div>
 </template>
 
@@ -82,7 +85,13 @@ ul {
 }
 li {
   display: inline-block;
-  margin: 0 10px;
+  margin: 10px;
+}
+li.product {
+  list-style-position: inside;
+  border: 1px solid black;
+  padding: 5px;
+  width: 300px;
 }
 a {
   color: #42b983;
