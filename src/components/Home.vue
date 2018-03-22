@@ -1,11 +1,12 @@
 <template>
   <div class="hello">
-     <input autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"
+     I want to check out taggle for my shop with the domain<br>
+     <span>https://</span><input autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"
         v-model="shopname"
         value="shopname"
         v-on:keyup.enter="goToUrl"
         autofocus
-        >
+        ><span>.beyondshop.cloud</span>
      <p>To see the magik press #Enter</p>
     </div>
 </template>
@@ -54,5 +55,8 @@ input {
   text-align: center;
   font-size: 150%;
   margin-top: 20px;
+}
+.hello span {
+  font-size: 150%;
 }
 </style>
