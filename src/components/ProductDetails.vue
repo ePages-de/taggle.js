@@ -9,7 +9,10 @@
         <div id="details">
           <h1>{{product.name}}</h1>
           <div id="sku">Product Number: {{product.sku}}</div>
-          <div id="price">{{product.salesPrice.currency}} {{product.salesPrice.amount}}</div>
+          <div id="price">
+            <span class="currency">&pound;</span>
+            <span class="amount">{{product.salesPrice.amount | formatNumber}}</span>
+          </div>
           <div id="description">{{product.description}}</div>
           <div id="tags">
             <ul>
@@ -27,13 +30,14 @@
 /* eslint-disable */
 import axios from 'axios'
 import uriTemplates from 'uri-templates'
+import numeral from 'numeral'
 
 export default {
   name: 'ProductDetails',
 
   data: function() {
     return {
-      product: { },
+      product: { "salesPrice" : { "amount" : 0, "currency" : "GBP" }},
       errors: []
     }
   },
@@ -41,6 +45,12 @@ export default {
   computed: {
     shop: function() { return this.$route.params.shop },
     id: function() { return this.$route.params.id }
+  },
+
+  filters: {
+    formatNumber: function (value) {
+      return numeral(value).format('0,0.00')
+    }
   },
 
   methods: {
