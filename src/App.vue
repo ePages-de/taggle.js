@@ -46,6 +46,9 @@ body {
   bottom: 10px;
   position: absolute;
 }
+text:hover {
+  cursor: pointer;
+}
 @media (max-width:767px)
 {
   body {padding: 0 2%;}
