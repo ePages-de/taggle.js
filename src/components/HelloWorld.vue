@@ -1,5 +1,6 @@
 <template>
   <div class="hello">
+    <VueTagCloud v-bind:data="tagData"></VueTagCloud>
     <div v-if="tags && tags.length">
       <h2>Tags ({{tags.length}})</h2>
       <ul>
@@ -27,15 +28,30 @@
 /* eslint-disable */
 import axios from 'axios'
 import uriTemplates from 'uri-templates'
+import VueTagCloud from 'vue-tag-cloud'
+
 export default {
   name: 'HelloWorld',
+  components: {
+    VueTagCloud
+  },
+
   data () {
     return {
+      tagData: [
+        // { text: 'Lorem', weight: 15 },
+        { text: 'Lorem', weight: 15, link: 'https://google.com' },
+        { text: 'Ipsum', weight: 9 },
+        { text: 'Dolor', weight: 6 },
+        { text: 'Sit', weight: 7 },
+        { text: 'Amet', weight: 5 }
+      ],
       products: [],
       tags: [],
       errors: []
     }
   },
+  
   created () {
     // retrieve tags
     axios.get('https://taggle.beyondshop.cloud/api/product-view/products/search/find-available-tags')
@@ -45,6 +61,7 @@ export default {
         Object.keys(x).forEach(key => {
           tag.name = key
           tag.count = x[key]
+          //tag.link = '#/tags?tag=' + key
         })
         return tag
       })
