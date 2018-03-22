@@ -12,7 +12,7 @@ export default new Router({
       name: 'HelloWorld',
       component: HelloWorld
     }, {
-      path: '/products',
+      path: '/products/:tag',
       name: 'ProductList',
       component: ProductList
     }

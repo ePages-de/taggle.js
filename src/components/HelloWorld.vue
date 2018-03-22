@@ -48,7 +48,7 @@ export default {
         Object.keys(x).forEach(key => {
           tag.name = key
           tag.count = x[key]
-          tag.href = '#/products?tag=' + key
+          tag.href = '#/products/' + key
         })
         return tag
       })
