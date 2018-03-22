@@ -1,13 +1,16 @@
 <template>
   <div id="app">
-    <a href="/#/"><img src="./assets/vue.png" width="150"></a>
+    <a :href="tagsUri"><img src="./assets/vue.png" width="150"></a>
     <router-view/>
   </div>
 </template>
 
 <script>
 export default {
-  name: 'App'
+  name: 'App',
+  computed: {
+    tagsUri: function() { return  '/#/' + this.$route.params.shop || '/#/taggle' }
+  }
 }
 </script>
 
