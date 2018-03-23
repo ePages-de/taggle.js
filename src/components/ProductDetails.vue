@@ -10,8 +10,7 @@
           <h1>{{product.name}}</h1>
           <div id="sku">Product Number: {{product.sku}}</div>
           <div id="price">
-            <span class="currency" v-html="formatCurrency(product.salesPrice.currency)"></span>
-            <span class="amount">{{product.salesPrice.amount | formatNumber}}</span>
+            <span class="currency" v-html="formatCurrency(product.salesPrice.currency)"></span><span class="amount">{{product.salesPrice.amount | formatNumber}}</span>
           </div>
           <div id="description">{{product.description}}</div>
           <div id="tags">
