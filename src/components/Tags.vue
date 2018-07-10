@@ -32,7 +32,7 @@ export default {
       defaultWords: []
     }
   },
-  
+
   computed: {
     shop: function() { return this.$route.params.shop }
   },
@@ -42,17 +42,15 @@ export default {
       var api = 'https://' + shop + '.beyondshop.cloud/api/product-view/products/search/find-available-tags'
       axios.get(api)
       .then(response => {
-        this.tags = response.data.tags.map(x => {
+        this.tags = response.data._embedded.tags.map(tagCount => {
           var tag = {}
-          Object.keys(x).forEach(key => {
-            tag.name = key
-            tag.count = x[key]
-            tag.href = '#/' + shop + '/products/' + key
-          })
+          tag.name = tagCount.tag
+          tag.count = tagCount.count
+          tag.href = '#/' + shop + '/products/' + tag.name
           return tag
         })
         this.defaultWords = this.tags
-      })  
+      })
       .catch(e => {
         this.errors.push(e)
       })

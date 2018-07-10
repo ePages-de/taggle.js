@@ -1,6 +1,6 @@
 # taggle.js
 
-This is an open source application for our BEYOND storefront. Using this application, the storefront will be build based on tags and not on collections as it is the case in the typical BEYOND storefront. This facilitates the maintenance for merchants as they do not need to take care of adding new collections and assigning products to them. Merchants only need to assign tags to the product once.  
+This is an open source application for our BEYOND storefront. Using this application, the storefront will be build based on tags and not on collections as it is the case in the typical BEYOND storefront. This facilitates the maintenance for merchants as they do not need to take care of adding new collections and assigning products to them. Merchants only need to assign tags to the product once.
 
 The initial storefront will then show the assigned tags as a tag cloud. Each tag of this cloud is clickable and will lead to a new page including all products with the required tag. Further product information (such as price and product image) are available on product detail pages that can be accessed by clicking on the respective product.
 
@@ -72,9 +72,17 @@ added 3 packages in 7.883s
 
 ```json
 {
-    "tags" : [
-        { "kitchen" : 22 },
-        { "furniture" : 10 }
-    ]
+    "_embedded" : {
+        "tags" : [
+            {
+                "tag": "kitchen",
+                "count": 22
+            },
+            {
+                "tag": "furniture",
+                "count": 10
+            }
+        ]
+    }
 }
 ```
